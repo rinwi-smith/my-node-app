@@ -5,4 +5,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    container_name: my-node-app-container
+    container_name: my-app-container
+    network_mode: host
