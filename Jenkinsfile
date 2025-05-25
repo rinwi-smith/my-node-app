@@ -13,8 +13,8 @@ pipeline {
         }
         stage('Test App') {
             steps {
-                sh 'sleep 5'
-                sh 'curl -s http://localhost:3000 | grep "Hello, World!"'
+                sh 'sleep 10'
+                sh 'curl -s http://host.docker.internal:3000 | grep -q "Hello, World"'
             }
         }
     }
