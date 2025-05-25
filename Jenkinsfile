@@ -11,6 +11,12 @@ pipeline {
                 sh 'docker compose up -d --build'
             }
         }
+        stage('Test App') {
+            steps {
+                sh 'sleep 5'
+                sh 'curl -s http://localhost:3000 | grep "Hello, World!"'
+            }
+        }
     }
     post {
         always {
