@@ -22,17 +22,13 @@ pipeline {
                     echo "Checking container status..."
                     docker ps -a | grep my-app-container || {
                         echo "Container not running!"
+                        docker logs my-app-container || true
                         exit 1
                     }
                     echo "Testing app with curl..."
-                    curl -s --retry 5 --retry-delay 2 http://localhost:3000 || {
-                        echo "Curl failed, response was:"
-                        curl -s http://localhost:3000
-                        exit 1
-                    }
-                    curl -s http://localhost:3000 | grep -q "Hello,.*World" || {
-                        echo "Grep failed, response was:"
-                        curl -s http://localhost:3000
+                    curl -s --retry 5 --retry-delay 2 http://my-app-container:3000 | grep -q "Hello,.*World" || {
+                        echo "Test failed, response was:"
+                        curl -s http://my-app-container:3000
                         exit 1
                     }
                     echo "Test passed!"
@@ -43,7 +39,6 @@ pipeline {
     post {
         always {
             sh 'docker compose down || true'
-            sh 'docker rm -f my-app-container || true'
         }
     }
 }
