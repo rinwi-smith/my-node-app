@@ -20,7 +20,7 @@ pipeline {
     }
     post {
         always {
-            sh 'docker compose down || true'
+            sh 'docker compose down || false'
         }
     }
 }
