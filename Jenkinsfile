@@ -8,13 +8,13 @@ pipeline {
         }
         stage('Build and Run with Docker Compose') {
             steps {
-                sh 'docker compose up -d --build'
+                sh 'docker compose up -d --build --force-recreate'
             }
         }
         stage('Test App') {
             steps {
-                sh 'sleep 10'
-                sh 'curl -s http://host.docker.internal:3000 | grep -q "Hello, World"'
+                sh 'sleep 15'
+                sh 'curl -s --retry 3 --retry-delay 2 http://localhost:3000 | grep -q "Hello,.*World"'
             }
         }
     }
