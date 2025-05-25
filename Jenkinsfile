@@ -1,16 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Build Docker Image') {
+        stage('Build and Run with Docker Compose') {
             steps {
-                sh 'docker build -t my-node-app .'
+                sh 'docker compose down || true'
+                sh 'docker compose up -d --build'
             }
         }
-        stage('Run Docker Container') {
-            steps {
-                sh 'docker rm -f my-app-container || true'
-                sh 'docker run -d -p 3000:3000 --name my-app-container my-node-app'
-            }
+    }
+    post {
+        always {
+            sh 'docker compose down || true'
         }
     }
 }
