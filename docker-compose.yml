@@ -6,4 +6,8 @@ services:
     ports:
       - "3000:3000"
     container_name: my-app-container
-    network_mode: host
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
