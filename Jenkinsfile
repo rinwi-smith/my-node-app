@@ -19,7 +19,7 @@ pipeline {
         }
     }
     post {
-        always {
+        failure {
             sh 'docker-compose down || true'
         }
     }
