@@ -4,7 +4,6 @@ pipeline {
         stage('Clean Up') {
             steps {
                 sh 'docker-compose down || true'
-                sh 'docker rm -f my-app-container || true'
             }
         }
         stage('Build and Run with Docker Compose') {
@@ -22,7 +21,6 @@ pipeline {
     post {
         always {
             sh 'docker-compose down || true'
-            sh 'docker rm -f my-app-container || true'
         }
     }
 }
